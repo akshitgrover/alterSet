@@ -13,7 +13,7 @@ function AlterSet(obj){
         return new AlterSet(obj);
     }
     if(typeof obj !== "undefined"){
-        this.prototype = Object.assign({}, obj, this.prototype);
+        Object.assign(this, obj);
     }
 
 }
