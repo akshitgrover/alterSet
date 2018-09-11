@@ -6,14 +6,18 @@
  * @param {Object} obj
  */
 let addGlobal = (AlterSet, obj)=>{
+
     let x = AlterSet.prototype.__proto__;
     Object.assign(x, obj, x);
     x = null;
     return;
-}
+
+};
 
 module.exports = (AlterSet)=>{
+    
     return {
         addGlobal: addGlobal.bind(addGlobal, AlterSet)
-    }
-}
+    };
+    
+};
