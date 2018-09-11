@@ -1,6 +1,7 @@
 "use strict";
 
-const functions = require("./functions");
+const functions = require("./functions"); //Import standalone functions
+const prototypes = require("./prototypes"); //Import functions to be added in prototype chain
 
 /**
  * Initialize AlterSet (Constructor Function)
@@ -16,6 +17,9 @@ function AlterSet(obj){
     }
 
 }
+
+//Add functions in the prototype chain
+Object.assign(AlterSet.prototype, prototypes);
 
 //Export: alterSet constructor
 module.exports = AlterSet;
