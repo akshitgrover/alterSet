@@ -7,6 +7,7 @@
  */
 let addProps = function(...arr){
 
+    let f = new this.constructor(this);
     return arr.reduce((flag, inst)=>{
         if(inst instanceof Object){
             Object.keys(inst).forEach((key)=>{
@@ -17,7 +18,7 @@ let addProps = function(...arr){
         } else{
             return flag;
         }
-    }, {});
+    }, f);
 
 };
 
@@ -28,6 +29,7 @@ let addProps = function(...arr){
  */
 let subProps = function(...arr){
 
+    let f = new this.constructor(this);
     return arr.reduce((flag, inst)=>{
         if(inst instanceof Object){
             Object.keys(inst).forEach((key)=>{
@@ -37,7 +39,7 @@ let subProps = function(...arr){
         } else{
             return flag;
         }
-    }, {});
+    }, f);
 
 };
 
