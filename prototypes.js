@@ -53,7 +53,7 @@ let subProps = function(...arr){
  */
 let intersection = function(arr, options = {}){
 
-    if(typeof arr !== "array"){
+    if(typeof arr !== "object"){
         let e = new Error(`arr should be 'object' got '${typeof options}'`);
         e.code = "ERR_INVALID_ARG_TYPE";
         throw e;
@@ -65,7 +65,7 @@ let intersection = function(arr, options = {}){
     }
 
     let flag = new Object();
-    let flagObj = {};
+    let flagObj = new (function(){});
 
     //Specify default values;
     options.unref = (typeof options.unref === "undefined") ? true : options.unref;
@@ -88,7 +88,8 @@ let intersection = function(arr, options = {}){
     if(options.unref === true){
         return Object.assign({}, flagObj);
     } else if(options.unref === false){
-        return new this.constructor(flagObj);
+        flagObj.__proto__ = this.__proto__;
+        return flagObj;
     } else{
         let e = new Error(`options.unref should be 'boolean' got '${typeof options.unref}'`);
         e.code = "ERR_INVALID_ARG_TYPE";
