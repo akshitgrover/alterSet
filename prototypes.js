@@ -46,16 +46,21 @@ let subProps = function(...arr){
 /**
  * Create an object with values from existing object and properties specified in array.
  * Return: Object
- * @param {AlterSet | Object} arr - Properties array.
- * @param {Object} options - Object containing control params
- * @param {bool} options.unref - `true` to reserve protochain
- * @param {bool} options.protoLookup - `true` to look in protochain for value
+ * @param {Array} arr - Properties array.
+ * @param {Object} [options={unref:true, protoLookup:true}] - Object containing control params
+ * @param {bool} [options.unref=true] - `true` to reserve protochain
+ * @param {bool} [options.protoLookup=true] - `true` to look in protochain for value
  */
 let intersection = function(arr, options = {}){
 
+    if(typeof arr !== "array"){
+        let e = new Error(`arr should be 'object' got '${typeof options}'`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
     if(typeof options !== "object"){
         let e = new Error(`options should be 'object' got '${typeof options}'`);
-        e.code = "ERR_INVALID_ARG_VALUE";
+        e.code = "ERR_INVALID_ARG_TYPE";
         throw e;
     }
 
@@ -96,14 +101,19 @@ let intersection = function(arr, options = {}){
  * Create an object with key, value pairs in both objects, overring with the pairs of passed object
  * Return: Object
  * @param {AlterSet | Object} obj - Object to append key value paris of
- * @param {Object} options - Object containing control params
- * @param {bool} options.unref - `true` to create new object else modify `this`
+ * @param {Object} [options={unref:false}] - Object containing control params
+ * @param {bool} [options.unref=false] - `true` to create new object else modify `this`
  */
 let union = function(obj, options = {unref:false}){
 
+    if(typeof obj !== "object"){
+        let e = new Error(`obj should be 'object' got '${typeof options}'`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e; 
+    }
     if(typeof options !== "object"){
         let e = new Error(`options should be 'object' got '${typeof options}'`);
-        e.code = "ERR_INVALID_ARG_VALUE";
+        e.code = "ERR_INVALID_ARG_TYPE";
         throw e;
     }
 
@@ -125,14 +135,19 @@ let union = function(obj, options = {unref:false}){
 /**
  * Return default value if property not found
  * @param {string} key - Property to search for
- * @param {*} d - Value to return in case of miss
+ * @param {*} [d] - Value to return in case of miss
  */
-let get = function(key, d){
+let get = function(key, d = null){
 
+    if(typeof key !== "string"){
+        let e = new Error(`key should be 'string' got '${typeof options.unref}'`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
     let flag = (this.hasOwnProperty(key)) ? this[key] : d;
     return flag;
 
-}
+};
 
 //Export functions
 module.exports = {
