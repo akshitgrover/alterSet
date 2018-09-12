@@ -122,12 +122,25 @@ let union = function(obj, options = {unref:false}){
 
 };
 
+/**
+ * Return default value if property not found
+ * @param {string} key - Property to search for
+ * @param {*} d - Value to return in case of miss
+ */
+let get = function(key, d){
+
+    let flag = (this.hasOwnProperty(key)) ? this[key] : d;
+    return flag;
+
+}
+
 //Export functions
 module.exports = {
 
     addProps,
     subProps,
     intersection,
-    union
+    union,
+    get
     
 };
