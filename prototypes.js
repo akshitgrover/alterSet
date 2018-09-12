@@ -3,7 +3,7 @@
 /**
  * Add values of properties which are common between all objects, others remain as it is.
  * Return: A new object
- * @param {AlterSet[]} arr 
+ * @param {AlterSet[] | Object[]} arr 
  */
 let addProps = function(...arr){
 
@@ -25,7 +25,7 @@ let addProps = function(...arr){
 /**
  * Subtract values of properties which are common between all objects, others remain as it is.
  * Return: A new object
- * @param {AlterSet[]} arr 
+ * @param {AlterSet[] | Object[]} arr 
  */
 let subProps = function(...arr){
 
@@ -43,10 +43,91 @@ let subProps = function(...arr){
 
 };
 
+/**
+ * Create an object with values from existing object and properties specified in array.
+ * Return: Object
+ * @param {AlterSet | Object} arr - Properties array.
+ * @param {Object} options - Object containing control params
+ * @param {bool} options.unref - `true` to reserve protochain
+ * @param {bool} options.protoLookup - `true` to look in protochain for value
+ */
+let intersection = function(arr, options = {}){
+
+    if(typeof options !== "object"){
+        let e = new Error(`options should be 'object' got '${typeof options}'`);
+        e.code = "ERR_INVALID_ARG_VALUE";
+        throw e;
+    }
+
+    let flag = new Object();
+    let flagObj = {};
+
+    //Specify default values;
+    options.unref = (typeof options.unref === "undefined") ? true : options.unref;
+    options.protoLookup = (typeof options.protoLookup === "undefined") ? true : options.protoLookup;
+
+    if(options.protoLookup === false){
+        flag = Object.assign({}, this);
+    } else if(options.protoLookup === true){
+        flag = Object.create(this);
+    } else{
+        let e = new Error(`options.protoLookup should be 'boolean' got '${typeof options.unref}'`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    for(let i of arr){
+        if(typeof flag[i] !== "undefined"){
+            flagObj[i] = flag[i];
+        }
+    }
+    if(options.unref === true){
+        return Object.assign({}, flagObj);
+    } else if(options.unref === false){
+        return new this.constructor(flagObj);
+    } else{
+        let e = new Error(`options.unref should be 'boolean' got '${typeof options.unref}'`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    
+};
+
+/**
+ * Create an object with key, value pairs in both objects, overring with the pairs of passed object
+ * Return: Object
+ * @param {AlterSet | Object} obj - Object to append key value paris of
+ * @param {Object} options - Object containing control params
+ * @param {bool} options.unref - `true` to create new object else modify `this`
+ */
+let union = function(obj, options = {unref:false}){
+
+    if(typeof options !== "object"){
+        let e = new Error(`options should be 'object' got '${typeof options}'`);
+        e.code = "ERR_INVALID_ARG_VALUE";
+        throw e;
+    }
+
+    let x;
+    if(options.unref === true){
+        let flag = Object.create(this);
+        x = Object.assign(flag, obj);
+    } else if(options.unref === false){
+        x = Object.assign(this, obj);
+    } else{
+        let e = new Error(`options.unref should be 'boolean' got '${typeof options.unref}'`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    return x;
+
+};
+
 //Export functions
 module.exports = {
 
     addProps,
-    subProps
+    subProps,
+    intersection,
+    union
     
 };
