@@ -150,6 +150,61 @@ let get = function(key, d = null){
 
 };
 
+/**
+ * Get JSON representation of the object
+ */
+let json = function(){
+    return JSON.stringify(this);
+};
+
+/**
+ * Intuitive way of checking key existence
+ * @param {string} key - Key to check existence of
+ */
+let hasKey = function(key){
+    
+    if(typeof key !== "string"){
+        let e = new Error(`key should be 'string' got ${typeof key}`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    return this.hasOwnProperty(key);
+
+};
+
+/**
+ * Find keys having a certain value
+ * @param {string | number} value - Value to search the keys for
+ * @param {Object} options - Object with control params
+ * @param {boolean} options.strict - Flag to switch between strict/unstrict value matching
+ */
+let withValue = function(value, options = {strict: false}){
+
+    if(typeof options !== "object"){
+        let e = new Error(`options should be'object' got ${typeof options}`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    if(typeof options.strict !== "boolean"){
+        let e = new Error(`options.strict should be 'boolean' got ${typeof options.strict}`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    if(typeof value !== "string" && typeof value !== "number" && typeof value !== "boolean"){
+        let e = new Error(`value should be 'string | number | boolean' got ${typeof value}`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+
+    return Object.entries(this).reduce((arr, [key, v])=>{
+        if((v === value) || (options.strict === false && v == value)){
+            arr.push(key);
+        }
+        return arr;
+    }, []);
+
+};
+
 //Export functions
 module.exports = {
 
@@ -157,6 +212,9 @@ module.exports = {
     subProps,
     intersection,
     union,
-    get
+    get,
+    json,
+    hasKey,
+    withValue
     
 };
