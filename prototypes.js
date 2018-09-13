@@ -2,12 +2,14 @@
 
 /**
  * Add values of properties which are common between all objects, others remain as it is.
- * Return: A new object
- * @param {AlterSet[] | Object[]} arr 
+ * @memberof AlterSet
+ * @instance
+ * @param {AlterSet[] | Object[]} arr - Array of objects to add properties of
+ * @returns {Object} - Values will be sum of individual values of passed object
  */
 let addProps = function(...arr){
 
-    let f = new this.constructor(this);
+    let f = Object.create(this);
     return arr.reduce((flag, inst)=>{
         if(inst instanceof Object){
             Object.keys(inst).forEach((key)=>{
@@ -24,12 +26,14 @@ let addProps = function(...arr){
 
 /**
  * Subtract values of properties which are common between all objects, others remain as it is.
- * Return: A new object
- * @param {AlterSet[] | Object[]} arr 
+ * @memberof AlterSet
+ * @instance
+ * @param {AlterSet[] | Object[]} arr - Array of objects to subtract properties of
+ * @returns {Object} - Values will be `Instance Value` - `Sum of passed object values` of individual values of passed object
  */
 let subProps = function(...arr){
 
-    let f = new this.constructor(this);
+    let f = Object.create(this);
     return arr.reduce((flag, inst)=>{
         if(inst instanceof Object){
             Object.keys(inst).forEach((key)=>{
@@ -45,11 +49,13 @@ let subProps = function(...arr){
 
 /**
  * Create an object with values from existing object and properties specified in array.
- * Return: Object
+ * @memberof AlterSet
+ * @instance
  * @param {Array} arr - Properties array.
  * @param {Object} [options={unref:true, protoLookup:true}] - Object containing control params
- * @param {bool} [options.unref=true] - `true` to reserve protochain
- * @param {bool} [options.protoLookup=true] - `true` to look in protochain for value
+ * @param {Boolean} [options.unref=true] - `true` to reserve protochain
+ * @param {Boolean} [options.protoLookup=true] - `true` to look in protochain for value
+ * @return {Object} - An object with keys which are passed in array.
  */
 let intersection = function(arr, options = {}){
 
@@ -100,10 +106,12 @@ let intersection = function(arr, options = {}){
 
 /**
  * Create an object with key, value pairs in both objects, overring with the pairs of passed object
- * Return: Object
+ * @memberof AlterSet
+ * @instance
  * @param {AlterSet | Object} obj - Object to append key value paris of
  * @param {Object} [options={unref:false}] - Object containing control params
- * @param {bool} [options.unref=false] - `true` to create new object else modify `this`
+ * @param {Boolean} [options.unref=false] - `true` to create new object else modify `this`
+ * @returns {Object} - An concatinated object `Instance` U `Passed Object`
  */
 let union = function(obj, options = {unref:false}){
 
@@ -135,8 +143,11 @@ let union = function(obj, options = {unref:false}){
 
 /**
  * Return default value if property not found
- * @param {string} key - Property to search for
+ * @memberof AlterSet
+ * @instance
+ * @param {String} key - Property to search for
  * @param {*} [d] - Value to return in case of miss
+ * @returns {*} - Value against a Key in the object
  */
 let get = function(key, d = null){
 
@@ -152,6 +163,9 @@ let get = function(key, d = null){
 
 /**
  * Get JSON representation of the object
+ * @memberof AlterSet
+ * @instance
+ * @returns {String} - Object to JSON
  */
 let json = function(){
     return JSON.stringify(this);
@@ -159,7 +173,10 @@ let json = function(){
 
 /**
  * Intuitive way of checking key existence
- * @param {string} key - Key to check existence of
+ * @memberof AlterSet
+ * @instance
+ * @param {String} key - Key to check existence of
+ * @returns {Boolean} - True/False
  */
 let hasKey = function(key){
     
@@ -174,9 +191,12 @@ let hasKey = function(key){
 
 /**
  * Find keys having a certain value
- * @param {string | number} value - Value to search the keys for
+ * @memberof AlterSet
+ * @instance
+ * @param {String | Number} value - Value to search the keys for
  * @param {Object} options - Object with control params
- * @param {boolean} options.strict - Flag to switch between strict/unstrict value matching
+ * @param {Boolean} options.strict - Flag to switch between strict/unstrict value matching
+ * @returns {Array} - Array of keys matching a certain value
  */
 let withValue = function(value, options = {strict: false}){
 

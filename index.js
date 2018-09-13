@@ -5,7 +5,9 @@ const prototypes = require("./prototypes"); //Import functions to be added in pr
 
 /**
  * Initialize AlterSet (Constructor Function)
- * @param {Object} [obj] - Object whose properties you want to have with alterset
+ * @class
+ * @param {Object} [obj] - Object whose properties you want to have in alterset
+ * @
  */
 function AlterSet(obj){
 
@@ -25,4 +27,5 @@ Object.assign(AlterSet.prototype, prototypes);
 module.exports = AlterSet;
 
 //Export: Standalone Object utility functions
+/**@namespace */
 module.exports.func = functions(AlterSet);

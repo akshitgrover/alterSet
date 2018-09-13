@@ -3,20 +3,24 @@
 /**
  * Add properties to all the objects, `Existing` as well as `To be created`.
  * Avoid using this utility in bigger projects
- * @param {Object} obj
+ * @memberof func
+ * @param {Object} obj - Object to properties
+ * @returns {Object} - Null Object
  */
 let addGlobal = (AlterSet, obj)=>{
 
     let x = AlterSet.prototype.__proto__;
     Object.assign(x, obj, x);
     x = null;
-    return;
+    return null;
 
 };
 
 /**
  * Convert JSON to Object
- * @param {string} json - JSON representation of the object to retrieve 
+ * @memberof func
+ * @param {String} json - JSON representation of the object to retrieve
+ * @return {Object} - JSON to Object
  */
 let fromJson = (json)=>{
 
