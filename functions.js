@@ -14,10 +14,22 @@ let addGlobal = (AlterSet, obj)=>{
 
 };
 
+/**
+ * Convert JSON to Object
+ * @param {string} json - JSON representation of the object to retrieve 
+ */
+let fromJson = (json)=>{
+
+    return JSON.parse(json);
+
+};
+
+//Export functions
 module.exports = (AlterSet)=>{
     
     return {
-        addGlobal: addGlobal.bind(addGlobal, AlterSet)
+        addGlobal: addGlobal.bind(addGlobal, AlterSet),
+        fromJson
     };
     
 };
