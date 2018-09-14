@@ -1,5 +1,7 @@
 "use strict";
 
+const sortArray = require("./functions.js")().sort;
+
 /**
  * Add values of properties which are common between all objects, others remain as it is.
  * @memberof AlterSet
@@ -225,6 +227,73 @@ let withValue = function(value, options = {strict: false}){
 
 };
 
+/**
+ * Get array of keys, in Ascending or Descending order of values
+ * @param {Object} [options] - Object containing control params
+ * @param {String} [options.order=ASC] - Ascending `ASC` or Descending `DESC`
+ * @param {String} [options.returns=keys] - Array of Keys || Value
+ * @memberof AlterSet
+ * @instance
+ * @returns {Array} - Either array of `keys` or `values` based on value of returns
+ */
+let sort = function(options = {}){
+    
+    if(typeof options !== "object"){
+        let e = new Error(`options should be 'object' got ${typeof options}`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    let order = options.order || "ASC";
+    let returns = options.returns || "keys";
+    if(typeof order !== "string"){
+        let e = new Error(`order shoule be 'string' got ${typeof order}`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    if(typeof returns !== "string"){
+        let e = new Error(`returns should be 'string' got ${typeof order}`);
+        e.code = "ERR_INVALID_ARG_TYPE";
+        throw e;
+    }
+    if(returns !== "keys" && returns !== "values"){
+        let e = new Error(`value of return should be 'keys' or 'values' got ${order}`);
+        e.code = "ERR_INVALID_ARG_VALUE";
+        throw e;
+    }
+
+    let values = Object.values(this);
+    let finalArr = [];
+    let sortedArr = sortArray(values, order);
+    if(returns === "values"){
+        return sortedArr;
+    }
+
+    sortedArr.forEach((v)=>{
+        if(typeof v === "string" || typeof v === "number" || typeof v === "boolean"){
+            finalArr = finalArr.concat(this.withValue(v));
+        } else{
+            return;
+        }
+    });
+    return finalArr;
+
+};
+
+/**
+ * Get key of maximum value
+ * @memberof AlterSet
+ * @instance
+ * @returns {Array} - Array of keys with the maximum value 
+ */
+let getMax = function(){
+
+    let arr = sortArray(Object.values(this));
+    let maxVal = arr[arr.length - 1];
+    let maxKey = this.withValue(maxVal);
+    return maxKey;
+
+};
+
 //Export functions
 module.exports = {
 
@@ -235,6 +304,8 @@ module.exports = {
     get,
     json,
     hasKey,
-    withValue
+    withValue,
+    sort,
+    getMax
     
 };
