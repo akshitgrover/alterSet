@@ -238,7 +238,7 @@ let withValue = function(value, options = {strict: false}){
  */
 let sort = function(options = {}){
     
-    if(typeof options !== "object"){
+    if(!options || typeof options !== "object"){
         let e = new Error(`options should be 'object' got ${typeof options}`);
         e.code = "ERR_INVALID_ARG_TYPE";
         throw e;
@@ -268,13 +268,14 @@ let sort = function(options = {}){
         return sortedArr;
     }
 
-    sortedArr.forEach((v)=>{
-        if(typeof v === "string" || typeof v === "number" || typeof v === "boolean"){
+    for(let i in sortedArr){
+        let v = sortedArr[i];
+        if((typeof v === "string" || typeof v === "number" || typeof v === "boolean") && v !== sortedArr[i - 1]){
             finalArr = finalArr.concat(this.withValue(v));
         } else{
-            return;
+            continue;
         }
-    });
+    }
     return finalArr;
 
 };
@@ -294,6 +295,18 @@ let getMax = function(){
 
 };
 
+/**
+ * Get key of minimu value
+ * @memberof AlterSet
+ * @instance
+ * @returns {Array} - Array of keys with the maximum value 
+ */
+let getMin = function(){
+    let arr = sortArray(Object.values(this));
+    let minKey = this.withValue(arr[0]);
+    return minKey;
+}
+
 //Export functions
 module.exports = {
 
@@ -306,6 +319,7 @@ module.exports = {
     hasKey,
     withValue,
     sort,
-    getMax
+    getMax,
+    getMin
     
 };
