@@ -49,6 +49,7 @@ let sort = (arr, order = "ASC")=>{
     }
 
     let sortedArr = [];
+    arr = new Array(...arr);
     switch(order){
 
         case "ASC":
