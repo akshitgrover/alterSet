@@ -305,7 +305,7 @@ let getMin = function(){
     let arr = sortArray(Object.values(this));
     let minKey = this.withValue(arr[0]);
     return minKey;
-}
+};
 
 //Export functions
 module.exports = {

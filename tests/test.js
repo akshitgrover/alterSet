@@ -31,12 +31,12 @@ it("Should test sort func (Success)", ()=>{
     let arr = [1, 2, 5, -1, 5];
     let ascArr = func.sort(arr);
     let descArr = func.sort(arr, "DESC");
-    expect(ascArr).toEqual([-1,1,2,5,5]);
-    expect(descArr).toEqual([5,5,2,1,-1]);
+    expect(ascArr).toEqual([-1, 1, 2, 5, 5]);
+    expect(descArr).toEqual([5, 5, 2, 1, -1]);
 });
 
 it("Should test sort func (Failure)", ()=>{
-    let arr = [1,2,3,4,5];
+    let arr = [1, 2, 3, 4, 5];
     try{
         func.sort(arr, null); //pass string
     } catch(err){
@@ -71,14 +71,14 @@ it("Should test subProps proto", ()=>{
 });
 
 it("Should check intersection", ()=>{
-    let arr = ["1","2","3","4","x"];
+    let arr = ["1", "2", "3", "4", "x"];
     asInst.__proto__.x = 7;
     let obj = asInst.intersection(arr);
-    expect(Object.keys(obj)).toEqual(["1","3","x"]);
-    obj = asInst.intersection(arr,{protoLookup:false});
-    expect(Object.keys(obj)).toEqual(["1","3"]);
-    expect(typeof obj.intersection).toEqual("undefined")
-    obj = asInst.intersection(arr,{protoLookup:false,unref:false});
+    expect(Object.keys(obj)).toEqual(["1", "3", "x"]);
+    obj = asInst.intersection(arr, {protoLookup:false});
+    expect(Object.keys(obj)).toEqual(["1", "3"]);
+    expect(typeof obj.intersection).toEqual("undefined");
+    obj = asInst.intersection(arr, {protoLookup:false, unref:false});
     expect(typeof obj.intersection).toEqual("function");
 });
 
@@ -89,7 +89,7 @@ it("Should test union proto", ()=>{
     expect(f["1"]).toBe(7);
     expect(asInst["8"]).toBe(9);
     asInst = AlterSet({1:2});
-    f = asInst.union(obj,{unref:true});
+    f = asInst.union(obj, {unref:true});
     expect(f["8"]).toBe(9);
     expect(typeof asInst["8"]).toBe("undefined");
 });
@@ -115,23 +115,23 @@ it("Should test withValue proto", ()=>{
     asInst[10] = 2;
     asInst[5] = 7;
     let arr = asInst.withValue(2);
-    expect(arr).toEqual(["1","10"]);
+    expect(arr).toEqual(["1", "10"]);
 });
 
 it("Should test sort proto", ()=>{
     let arr = asInst.sort();
-    expect(arr).toEqual(["1","10","5"]);
+    expect(arr).toEqual(["1", "10", "5"]);
     arr = asInst.sort({order:"DESC"});
-    expect(arr).toEqual(["5","1","10"]);
+    expect(arr).toEqual(["5", "1", "10"]);
     arr = asInst.sort({returns:"values"});
-    expect(arr).toEqual([2,2,7]);
-    arr = asInst.sort({returns:"values",order:"DESC"});
-    expect(arr).toEqual([7,2,2]);
+    expect(arr).toEqual([2, 2, 7]);
+    arr = asInst.sort({returns:"values", order:"DESC"});
+    expect(arr).toEqual([7, 2, 2]);
 });
 
 it("Should test sort proto (failure)", ()=>{
     try{
-        asInst.sort({returns: "asc"})
+        asInst.sort({returns: "asc"});
     } catch(err){
         expect(err.code).toEqual("ERR_INVALID_ARG_VALUE");
     }
@@ -149,7 +149,7 @@ it("Should test sort proto (failure)", ()=>{
     }
 
     try{
-        asInst.sort(null)
+        asInst.sort(null);
     } catch(err){
         expect(err.code).toEqual("ERR_INVALID_ARG_TYPE");
     }
@@ -162,6 +162,6 @@ it("Should test getMax proto", ()=>{
 
 it("Should test getMin proto", ()=>{
     let k = asInst.getMin();
-    expect(k).toEqual(["1","10"]);
+    expect(k).toEqual(["1", "10"]);
 });
 
