@@ -296,7 +296,7 @@ let getMax = function(){
 };
 
 /**
- * Get key of minimu value
+ * Get key of minimum value
  * @memberof AlterSet
  * @instance
  * @returns {Array} - Array of keys with the maximum value 

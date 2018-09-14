@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AlterSet.html">AlterSet</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#addProps">addProps</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#getMax">getMax</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#hasKey">hasKey</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#intersection">intersection</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#json">json</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#sort">sort</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#subProps">subProps</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#union">union</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#withValue">withValue</a></span></li><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="func.html">func</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="func.html#.addGlobal">addGlobal</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="func.html#.fromJson">fromJson</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="func.html#.sort">sort</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AlterSet.html">AlterSet</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#addProps">addProps</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#getMax">getMax</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#getMin">getMin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#hasKey">hasKey</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#intersection">intersection</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#json">json</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#sort">sort</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#subProps">subProps</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#union">union</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AlterSet.html#withValue">withValue</a></span></li><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="func.html">func</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="func.html#.addGlobal">addGlobal</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="func.html#.fromJson">fromJson</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="func.html#.sort">sort</a></span></li>
 </nav>
 
 <div id="main">
@@ -279,7 +279,7 @@ let withValue = function(value, options = {strict: false}){
  */
 let sort = function(options = {}){
     
-    if(typeof options !== "object"){
+    if(!options || typeof options !== "object"){
         let e = new Error(`options should be 'object' got ${typeof options}`);
         e.code = "ERR_INVALID_ARG_TYPE";
         throw e;
@@ -309,13 +309,14 @@ let sort = function(options = {}){
         return sortedArr;
     }
 
-    sortedArr.forEach((v)=>{
-        if(typeof v === "string" || typeof v === "number" || typeof v === "boolean"){
+    for(let i in sortedArr){
+        let v = sortedArr[i];
+        if((typeof v === "string" || typeof v === "number" || typeof v === "boolean") &amp;&amp; v !== sortedArr[i - 1]){
             finalArr = finalArr.concat(this.withValue(v));
         } else{
-            return;
+            continue;
         }
-    });
+    }
     return finalArr;
 
 };
@@ -335,6 +336,18 @@ let getMax = function(){
 
 };
 
+/**
+ * Get key of minimum value
+ * @memberof AlterSet
+ * @instance
+ * @returns {Array} - Array of keys with the maximum value 
+ */
+let getMin = function(){
+    let arr = sortArray(Object.values(this));
+    let minKey = this.withValue(arr[0]);
+    return minKey;
+};
+
 //Export functions
 module.exports = {
 
@@ -347,7 +360,8 @@ module.exports = {
     hasKey,
     withValue,
     sort,
-    getMax
+    getMax,
+    getMin
     
 };
 </code></pre>
@@ -362,7 +376,7 @@ module.exports = {
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.2</a> on Fri Sep 14 2018 17:37:59 GMT+0530 (IST) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.2</a> on Sat Sep 15 2018 04:53:19 GMT+0530 (IST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
