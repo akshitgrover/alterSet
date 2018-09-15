@@ -1,19 +1,40 @@
 {
   "name": "alterset",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "alterSet is an Object manipulation library, It extensively uses functional prototypes to leverage the prototypical chain and build functions on top of it.",
   "main": "index.js",
+  "homepage":"https://akshitgrover.github.io/alterSet",
   "scripts": {
     "test": "nyc ./node_modules/.bin/mocha ./tests/*.js",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Akshit Grover",
+    "email": "akshit.grover2016@gmal.com",
+    "url": "https://github.com/akshitgrover"
+  },
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/akshitgrover/alterSet"
+  },
+  "license": "Apache-2.0",
   "devDependencies": {
     "eslint": "^5.5.0",
     "expect": "^23.6.0",
     "mocha": "^5.2.0"
   },
+  "keywords":[
+    "object",
+    "prototype",
+    "manipulation",
+    "get",
+    "keys",
+    "values",
+    "add",
+    "find",
+    "from",
+    "functions"
+  ],
   "dependencies": {
     "jsdoc": "^3.5.5",
     "minami": "^1.2.3"

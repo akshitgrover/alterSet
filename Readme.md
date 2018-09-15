@@ -4,6 +4,10 @@
 
 alterSet is an Object manipulation library, It extensively uses functional prototypes to leverage the prototypical chain and build functions on top of it.
 
+## Installation
+
+`npm i alterset --save`
+
 ## Documentation
 
 Read the jsdoc content at:
